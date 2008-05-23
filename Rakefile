@@ -3,10 +3,10 @@ require 'rake/gempackagetask'
 
 GEM = "new_gem"
 VERSION = "0.0.1"
-AUTHOR = "Your Name"
-EMAIL = "Your Email"
-HOMEPAGE = "http://example.com"
-SUMMARY = "A gem that provides..."
+AUTHOR = "François Beausoleil"
+EMAIL = "francois@teksol.info"
+HOMEPAGE = "http://github.com/francois/tt"
+SUMMARY = "Track your time locally, offline, using this simple tool."
 
 spec = Gem::Specification.new do |s|
   s.name = GEM
@@ -21,7 +21,7 @@ spec = Gem::Specification.new do |s|
   s.homepage = HOMEPAGE
   
   # Uncomment this to add a dependency
-  # s.add_dependency "foo"
+  s.add_dependency "fastercsv", "~> 1.2.3"
   
   s.require_path = 'lib'
   s.autorequire = GEM
@@ -33,5 +33,5 @@ Rake::GemPackageTask.new(spec) do |pkg|
 end
 
 task :install => [:package] do
-  sh %{sudo gem install pkg/#{GEM}-#{VERSION}}
+  sh %{sudo gem install --no-rdoc --no-ri pkg/#{GEM}-#{VERSION}}
 end

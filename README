@@ -1,4 +1,21 @@
-templates
-=================
+TT - Time Tracker
+================
 
-A plugin for the Merb framework that provides ....
+Track your time locally, offline.
+
+Usage
+=====
+
+$ pi # punch in, stores current working directory, date, time (UTC)
+$ po # punch out: stops current task
+$ cd my-project
+$ pi
+$ # code furiously
+$ cd ../my-other-project
+$ pi talking about stuff # stops first instance, records new CWD, and comment
+$ po did this and that # stops tracking time, appends comment to time entry
+
+Data
+====
+
+The time tracker database is stored as ~/.tt/tt.csv
