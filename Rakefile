@@ -23,7 +23,6 @@ spec = Gem::Specification.new do |s|
   s.add_dependency "fastercsv", "~> 1.2.3"
   
   s.require_path = 'lib'
-  s.autorequire = GEM
   s.files = %w(LICENSE README Rakefile TODO) + Dir.glob("{lib,specs}/**/*")
 end
 
