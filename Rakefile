@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'rake/gempackagetask'
 
-GEM = "new_gem"
+GEM = "tt"
 VERSION = "0.0.1"
 AUTHOR = "François Beausoleil"
 EMAIL = "francois@teksol.info"
@@ -13,14 +13,13 @@ spec = Gem::Specification.new do |s|
   s.version = VERSION
   s.platform = Gem::Platform::RUBY
   s.has_rdoc = true
-  s.extra_rdoc_files = ["README", "LICENSE", 'TODO']
+  s.extra_rdoc_files = ["README", "LICENSE", "TODO"]
   s.summary = SUMMARY
   s.description = s.summary
   s.author = AUTHOR
   s.email = EMAIL
   s.homepage = HOMEPAGE
   
-  # Uncomment this to add a dependency
   s.add_dependency "fastercsv", "~> 1.2.3"
   
   s.require_path = 'lib'
@@ -35,3 +34,16 @@ end
 task :install => [:package] do
   sh %{sudo gem install --no-rdoc --no-ri pkg/#{GEM}-#{VERSION}}
 end
+
+begin
+  require "spec/rake/spectask"
+rescue LoadError
+  raise "rspec ~> 1.1.3 required to spec this gem, but it is not available."
+end
+
+Spec::Rake::SpecTask.new do |t|
+  t.spec_opts = []
+  t.warning = true
+end
+
+task :default => :spec
