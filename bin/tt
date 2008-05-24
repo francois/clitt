@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+require "rubygems"
+$: << File.dirname(__FILE__) + "/../lib"
+require "tt"
+
+case command = ARGV.shift
+when "list", "ls"
+  Tt.report
+when "clear"
+  Tt.clear
+when "drop"
+  Tt.drop
+else
+  raise "Unknown command: #{command.inspect}"
+end
