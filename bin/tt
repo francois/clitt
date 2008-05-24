@@ -11,5 +11,14 @@ when "clear"
 when "drop"
   Tt.drop
 else
-  raise "Unknown command: #{command.inspect}"
+  puts <<EOF
+WARNING: No command given
+
+tt - Time Tracker
+
+  list: lists the time entries
+  clear: deletes all time entries
+  drop: drops the last time entry from the file
+EOF
+  exit 1
 end
