@@ -14,8 +14,11 @@ $ # code furiously
 $ cd ../my-other-project
 $ pi talking about stuff # stops first instance, records new CWD, and comment
 $ po did this and that # stops tracking time, appends comment to time entry
+$ tt list # lists your time entries in a nice format
+$ tt drop # drops your last time entry
+$ tt clear # DESTROYS all time entries, no turning back, nor is there any confirmation
 
 Data
 ====
 
-The time tracker database is stored as ~/.tt/tt.csv
+The time tracker database is stored as ~/.tt/entries.csv
