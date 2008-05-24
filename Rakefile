@@ -42,8 +42,8 @@ rescue LoadError
 end
 
 Spec::Rake::SpecTask.new do |t|
-  t.spec_opts = []
-  t.warning = true
+  t.spec_opts = ["--format", "progress", "--color"]
+  t.warning = false
 end
 
 task :default => :spec
