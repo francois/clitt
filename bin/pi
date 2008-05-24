@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+require "rubygems"
+$: << File.dirname(__FILE__) + "/../lib"
+require "tt"
+
+Tt.punch_in(Dir.pwd, ARGV.empty? ? nil : ARGV.join(" "))
