@@ -6,7 +6,7 @@ Rake::GemPackageTask.new($spec) do |pkg|
   pkg.gem_spec = $spec
 end
 
-task :install => [:package] do
+task :install => [:repackage] do
   sh %{sudo gem install --no-rdoc --no-ri pkg/#{GEM}-#{VERSION}}
 end
 
