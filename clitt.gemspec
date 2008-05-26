@@ -21,4 +21,5 @@ $spec = Gem::Specification.new do |s|
   
   s.require_path = 'lib'
   s.files = %w(LICENSE README Rakefile TODO lib/tt.rb bin/tt bin/pi bin/po)
+  s.executables = %w(tt pi po)
 end
