@@ -30,22 +30,16 @@ module Tt
 
   def self.report_line(dir, intime, outtime, comment)
     ltime = Time.now
-    intime = intime + ltime.utc_offset if intime
-    outtime = outtime + ltime.utc_offset if outtime
+    intime = intime + ltime.utc_offset
+    endtime = (outtime.nil? ? Time.now.utc : outtime) + ltime.utc_offset
 
-    if outtime then
-      duration_in_seconds = outtime - intime
-      duration_in_minutes = duration_in_seconds / 60
-      duration_as_human_string = "%02d:%02d" % [duration_in_minutes / 60, duration_in_minutes % 60]
+    duration_in_seconds = endtime - intime
+    duration_in_minutes = duration_in_seconds / 60
+    duration_as_human_string = "%02d:%02d" % [duration_in_minutes / 60, duration_in_minutes % 60]
 
-      print "%-40s %16s %16s %5s" % [dir, intime.strftime(SCREEN_FORMAT), outtime.strftime(SCREEN_FORMAT), duration_as_human_string]
-      print " - %s" % comment if comment && !comment.empty?
-      puts
-    else
-      print "%-40s %16s %16s %5s" % [dir, intime.strftime(SCREEN_FORMAT), "", ""]
-      print " - %s" % comment if comment && !comment.empty?
-      puts
-    end
+    print "%-40s %16s %16s %5s" % [dir, intime.strftime(SCREEN_FORMAT), outtime ? outtime.strftime(SCREEN_FORMAT) : "", duration_as_human_string]
+    print " - %s" % comment if comment && !comment.empty?
+    puts
   end
 
   def self.report
