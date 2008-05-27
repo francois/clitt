@@ -1,5 +1,5 @@
 GEM = "tt"
-VERSION = "0.0.1"
+VERSION = "0.0.2"
 AUTHOR = "François Beausoleil"
 EMAIL = "francois@teksol.info"
 HOMEPAGE = "http://github.com/francois/tt"
