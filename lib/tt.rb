@@ -32,6 +32,7 @@ module Tt
     ltime = Time.now
     intime = intime + ltime.utc_offset
     endtime = (outtime.nil? ? Time.now.utc : outtime) + ltime.utc_offset
+    outtime = outtime + ltime.utc_offset if outtime
 
     duration_in_seconds = endtime - intime
     duration_in_minutes = duration_in_seconds / 60
