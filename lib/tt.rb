@@ -43,7 +43,7 @@ module Tt
     puts
   end
 
-  def self.report
+  def self.each_line
     tt_dir.mkdir unless tt_dir.directory?
     line, state, dir, intime, outtime, comment = 0, :out, nil, nil, nil, nil
 
@@ -61,7 +61,7 @@ module Tt
           state = :in
         when :in # switch task
           outtime = Time.parse(row[2])
-          report_line(dir, intime, outtime, [comment, row[3]].compact.join("; "))
+          yield(dir, intime, outtime, [comment, row[3]].compact.join("; "))
 
           dir = row[1]
           intime = Time.parse(row[2])
@@ -74,7 +74,7 @@ module Tt
         case state
         when :in # punch out
           outtime = Time.parse(row[2])
-          report_line(dir, intime, outtime, [comment, row[3]].compact.join("; "))
+          yield(dir, intime, outtime, [comment, row[3]].compact.join("; "))
 
           dir, intime, outtime, comment = nil
           state = :out
@@ -90,7 +90,13 @@ module Tt
 
     case state
     when :in
-      report_line(dir, intime, nil, comment)
+      yield(dir, intime, nil, comment)
+    end
+  end
+
+  def self.report
+    each_line do |dir, intime, outtime, comment|
+      report_line(dir, intime, outtime, comment)
     end
   end
 
