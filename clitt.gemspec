@@ -20,6 +20,6 @@ $spec = Gem::Specification.new do |s|
   s.add_dependency "fastercsv", "~> 1.2.3"
   
   s.require_path = 'lib'
-  s.files = %w(LICENSE README Rakefile TODO lib/tt.rb bin/tt bin/pi bin/po)
-  s.executables = %w(tt pi po)
+  s.files = %w(LICENSE README Rakefile TODO lib/tt.rb bin/clitt bin/pi bin/po)
+  s.executables = %w(clitt pi po)
 end
