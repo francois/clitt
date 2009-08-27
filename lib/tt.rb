@@ -1,4 +1,3 @@
-require "fastercsv"
 require "pathname"
 require "time"
 
@@ -6,8 +5,18 @@ module Tt
   FORMAT = "%Y-%m-%dT%H:%MZ"
   SCREEN_FORMAT = "%Y-%m-%d %H:%M"
 
+  def self.csv_engine
+    if RUBY_VERSION =~ /^1\.8/ then
+      require "fastercsv"
+      FasterCSV
+    else
+      require "csv"
+      CSV
+    end
+  end
+
   def self.root
-    @root ||= ENV["HOME"]
+    @root ||= ENV["CLITT_ROOT"].to_s.empty? ? ENV["HOME"] : ENV["CLITT_ROOT"]
   end
 
   def self.tt_dir
@@ -20,14 +29,14 @@ module Tt
 
   def self.punch_in(cwd, comment=nil)
     tt_dir.mkdir unless tt_dir.directory?
-    FasterCSV.open(tt_path, "ab") do |io|
+    csv_engine.open(tt_path, "ab") do |io|
       io << ["in", cwd, Time.now.utc.strftime(FORMAT), comment]
     end
   end
   
   def self.punch_out(cwd, comment=nil)
     tt_dir.mkdir unless tt_dir.directory?
-    FasterCSV.open(tt_path, "ab") do |io|
+    csv_engine.open(tt_path, "ab") do |io|
       io << ["out", cwd, Time.now.utc.strftime(FORMAT), comment]
     end
   end
@@ -51,7 +60,7 @@ module Tt
     tt_dir.mkdir unless tt_dir.directory?
     line, state, dir, intime, outtime, comment = 0, :out, nil, nil, nil, nil
 
-    FasterCSV.foreach(tt_path) do |row|
+    csv_engine.foreach(tt_path) do |row|
       line += 1
 
       case row[0]
@@ -105,9 +114,9 @@ module Tt
   end
 
   def self.drop
-    FasterCSV.open(tt_path.to_s + ".new", "wb") do |io|
+    csv_engine.open(tt_path.to_s + ".new", "wb") do |io|
       lastrow = nil
-      FasterCSV.foreach(tt_path, "rb") do |row|
+      csv_engine.foreach(tt_path, "rb") do |row|
         io << lastrow if lastrow
         lastrow = row
       end
