@@ -1,24 +1,18 @@
-require 'rubygems'
-require 'rake/gempackagetask'
-load File.dirname(__FILE__) + "/clitt.gemspec"
-
-Rake::GemPackageTask.new($spec) do |pkg|
-  pkg.gem_spec = $spec
-end
-
-task :install => [:repackage] do
-  sh %{sudo gem install --no-rdoc --no-ri pkg/#{GEM}-#{VERSION}}
-end
-
 begin
-  require "spec/rake/spectask"
+  require 'jeweler'
+  Jeweler::Tasks.new do |s|
+    s.name              = "clitt"
+    s.summary           = "Track your time locally, offline, using this simple tool."
+    s.email             = "francois@teksol.info"
+    s.homepage          = "http://francois.github.com/tt"
+    s.description       = s.summary
+    s.authors           = "Francois Beausoleil"
+    s.has_rdoc          = false
+
+    s.files             = FileList["bin/*"] + FileList["lib/**/*"]
+
+    s.add_runtime_dependency "fastercsv", "~> 1.2.3"
+  end
 rescue LoadError
-  raise "rspec ~> 1.1.3 required to spec this gem, but it is not available."
+  puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
 end
-
-Spec::Rake::SpecTask.new do |t|
-  t.spec_opts = ["--format", "progress", "--color"]
-  t.warning = false
-end
-
-task :default => :spec
