@@ -6,8 +6,12 @@ module Tt
   FORMAT = "%Y-%m-%dT%H:%MZ"
   SCREEN_FORMAT = "%Y-%m-%d %H:%M"
 
+  def self.root
+    @root ||= ENV["HOME"]
+  end
+
   def self.tt_dir
-    Pathname.new(ENV["HOME"]) + ".tt"
+    Pathname.new(root) + ".tt"
   end
 
   def self.tt_path
