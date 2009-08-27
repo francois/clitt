@@ -11,7 +11,7 @@ begin
 
     s.files             = FileList["bin/*"] + FileList["lib/**/*"]
 
-    s.add_runtime_dependency "fastercsv", "~> 1.2.3"
+    s.add_runtime_dependency "fastercsv", "~> 1"
   end
 rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
