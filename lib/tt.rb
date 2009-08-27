@@ -41,7 +41,7 @@ module Tt
     end
   end
 
-  def self.report_line(dir, intime, outtime, comment)
+  def self.report_line(dir, intime, outtime, comment, stream=STDOUT)
     ltime = Time.now
     intime = intime + ltime.utc_offset
     endtime = (outtime.nil? ? Time.now.utc : outtime) + ltime.utc_offset
@@ -51,9 +51,9 @@ module Tt
     duration_in_minutes = duration_in_seconds / 60
     duration_as_human_string = "%02d:%02d" % [duration_in_minutes / 60, duration_in_minutes % 60]
 
-    print "%-40s %16s %16s %5s" % [dir, intime.strftime(SCREEN_FORMAT), outtime ? outtime.strftime(SCREEN_FORMAT) : "", duration_as_human_string]
-    print " - %s" % comment if comment && !comment.empty?
-    puts
+    stream.print "%-40s %16s %16s %5s" % [dir, intime.strftime(SCREEN_FORMAT), outtime ? outtime.strftime(SCREEN_FORMAT) : "", duration_as_human_string]
+    stream.print " - %s" % comment if comment && !comment.empty?
+    stream.puts
   end
 
   def self.each_line
@@ -107,9 +107,9 @@ module Tt
     end
   end
 
-  def self.report
+  def self.report(stream=STDOUT)
     each_line do |dir, intime, outtime, comment|
-      report_line(dir, intime, outtime, comment)
+      report_line(dir, intime, outtime, comment, stream)
     end
   end
 
